@@ -1,5 +1,6 @@
 import requests
 
+
 class AdvisorService:
     def __init__(self):
         # ใช้ Base URL ตัวเดิมของนาย
@@ -7,14 +8,13 @@ class AdvisorService:
 
     def fetch_dashboard_data(self, advisor_id):
         try:
-            # 🌟 พ่วง ?advisor_id ไปเพื่อให้ Postman เลือก Example ถูกคน
             url = f"{self.base_url}/advisor/home?advisor_id={advisor_id}"
             print(f"DEBUG: Requesting URL -> {url}")
 
-            headers = {
-                "x-mock-match-request-query_params": "true"
-            }
-            response = requests.get(url, timeout=10)
+            headers = {"x-mock-match-request-query_params": "true"}
+
+            # 🌟 แก้ไขตรงนี้: ใส่ headers=headers เข้าไปด้วย!
+            response = requests.get(url, headers=headers, timeout=10)
 
             if response.status_code == 200:
                 return response.json(), None
