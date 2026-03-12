@@ -1,6 +1,6 @@
 # src/controllers/advisor_controller.py
 from services.advisor_service import AdvisorService
-
+from models.document_model import AdvisorDashboardModel, StudentSummaryModel, ActivityModel
 
 class AdvisorController:
     def __init__(self):
@@ -13,6 +13,26 @@ class AdvisorController:
         if error:
             return {"success": False, "message": error, "data": None}
 
-        # ตอนนี้หน้า UI (advisor_home.py) ดึงข้อมูล JSON ไปจัดการวาดหน้าจอเองแล้ว
-        # Controller เลยทำหน้าที่แค่เช็ค Error และส่งข้อมูลดิบ (data) กลับไปให้ครบๆ ก็พอครับ
-        return {"success": True, "data": data}
+        students = [
+            StudentSummaryModel(name=s.get("name", "N/A"), doc_status=s.get("doc_status", "-")) 
+            for s in data.get("students", [])
+        ]
+        
+        activities = [
+            ActivityModel(
+                title=a.get("doc_name", "N/A"), 
+                status=a.get("status", "-"),
+                name=a.get("name", ""),
+                form_type=a.get("form_type", "form1"),
+                submission_id=a.get("submission_id", "12345")
+            ) 
+            for a in data.get("activities", [])
+        ]
+        
+        model = AdvisorDashboardModel(
+            student_count=data.get("student_count", 0),
+            students=students,
+            activities=activities
+        )
+
+        return {"success": True, "data": model}

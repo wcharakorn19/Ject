@@ -1,10 +1,10 @@
 import requests
-
+from core.config import API_BASE_URL
 
 class AdvisorService:
     def __init__(self):
-        # ใช้ Base URL ตัวเดิมของนาย
-        self.base_url = "https://0e73cfd5-6b5f-4082-9c37-514cf7941cc1.mock.pstmn.io"
+        # ใช้ Base URL 
+        self.base_url = API_BASE_URL
 
     def fetch_dashboard_data(self, advisor_id):
         try:

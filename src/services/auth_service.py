@@ -1,8 +1,9 @@
 import requests
+from core.config import API_BASE_URL
 
 class AuthService:
     def login_api(self, email, password):
-        url = "https://0e73cfd5-6b5f-4082-9c37-514cf7941cc1.mock.pstmn.io/login"
+        url = f"{API_BASE_URL}/login"
         
         try:
             # วิ่งไปคุยกับ Mock API
